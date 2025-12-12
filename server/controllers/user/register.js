@@ -4,9 +4,7 @@ const http = require('http-status');
 module.exports = async (req, res, next) => {
   try {
     const user = await userRegisterService({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+      ...req.body,
     });
 
     res.status(http.status.OK).json({

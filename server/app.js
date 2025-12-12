@@ -28,10 +28,8 @@ app.get('/', (_req, res) => {
 });
 
 //  Public Routes
-// app.use('/admin', require('./routes/admin')); 
+// app.use('/admin', require('./routes/admin'));
 app.use('/user', require('./routes/user'));
-
-
 
 app.use((req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
@@ -56,8 +54,6 @@ app.use((req, res, next) => {
     });
   }
 });
-
-
 
 /**
  * * Error Handler. Provides full stack - disabled from production
