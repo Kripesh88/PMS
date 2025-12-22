@@ -1,4 +1,4 @@
-const getBreedsService = require('../../services/user/authentication/get-breed');
+const getBreedsService = require('../../../services/user/authentication/get-breed');
 const http = require('http-status');
 
 module.exports = async (req, res, next) => {

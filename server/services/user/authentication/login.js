@@ -1,9 +1,8 @@
-const { User } = require('../../models');
+const { User } = require('../../../models');
 const bcrypt = require('bcryptjs');
-const jwt = require('../../utils/authentication/jwt');
+const jwt = require('../../../utils/authentication/jwt');
 
 module.exports = async ({ email, password }) => {
-
   // 1. Find user
   const user = await User.findOne({ where: { email } });
   if (!user) throw new Error('Invalid email or password');

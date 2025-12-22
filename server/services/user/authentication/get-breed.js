@@ -1,5 +1,5 @@
-const { Breed } = require('../../models');
-const { ValidationError } = require('../../errors');
+const { Breed } = require('../../../models');
+const { ValidationError } = require('../../../errors');
 
 module.exports = async () => {
   const breeds = await Breed.findAll({

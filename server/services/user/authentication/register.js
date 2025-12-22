@@ -1,4 +1,4 @@
-const { User, Breed } = require('../../models');
+const { User, Breed } = require('../../../models');
 const bcrypt = require('bcryptjs');
 
 module.exports = async ({ name, email, password, breedId }) => {
@@ -12,6 +12,7 @@ module.exports = async ({ name, email, password, breedId }) => {
     where: { id: breedId },
     attributes: ['species', 'name'],
   });
+ 
 
   if (!findSpecies) {
     throw new Error('Selected breed does not exist');

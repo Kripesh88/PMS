@@ -1,4 +1,4 @@
-const userLoginService = require('../../services/user/login');
+const userLoginService = require('../../services/user/authentication/login');
 const http=require('http-status');
 
 module.exports = async (req, res,next) => {

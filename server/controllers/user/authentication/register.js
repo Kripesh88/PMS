@@ -1,4 +1,4 @@
-const userRegisterService = require('../../services/user/authentication/register');
+const userRegisterService = require('../../../services/user/authentication/register');
 const http = require('http-status');
 
 module.exports = async (req, res, next) => {
