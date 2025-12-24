@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Groomer.hasMany(models.Appointment,{
-        foreignKey: 'appointmentId',
-        as:'appointment'
+        foreignKey: 'groomerId',
+        as:'appointments'
       });
     }
   }
@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Groomer',
+    timestamps:false,
   });
   return Groomer;
 };

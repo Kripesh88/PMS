@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Vet.hasMany(models.Appointment,{
-        foreignKey: 'appointmentId',
-        as:'appointment'
+        foreignKey: 'vetId',
+        as:'appointments'
       });
     }
   }
@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Vet',
+    timestamps:false,
   });
   return Vet;
 };

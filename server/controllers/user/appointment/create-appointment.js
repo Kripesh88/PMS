@@ -1,14 +1,15 @@
+const http = require('http-status');
 const createAppointmentService = require('../../../services/user/appointment/create-appointment');
-const httpStatus = require('http-status');
 
 module.exports = async (req, res, next) => {
   try {
     const appointment = await createAppointmentService({
+      userId: req.params.userId,        
       ...req.body,
-      userId: req.user.id,
     });
 
-    res.status(httpStatus.CREATED).json({
+    res.status(http.status.OK).json({
+      success: true,
       message: 'Appointment created successfully',
       data: appointment,
     });

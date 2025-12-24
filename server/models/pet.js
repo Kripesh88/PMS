@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Pet extends Model {
     /**
@@ -12,42 +10,45 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Pet.belongsTo(models.Breed, {
-        foreignKey:'breedId',
-        as:'breed',
+        foreignKey: 'breedId',
+        as: 'breeds',
       });
 
-      Pet.belongsTo(models.User,{
-        foreignKey:'userId',
-        as:'user',
+      Pet.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'users',
       });
 
-      Pet.hasMany(models.Appointment,{
-        foreignKey: 'appointmentId',
-        as:'appointment'
+      Pet.hasMany(models.Appointment, {
+        foreignKey: 'petId',
+        as: 'appointments',
       });
     }
   }
-  Pet.init({
-    id:{
-      type: DataTypes.INTEGER,
-      autoIncrement:true,
-      primaryKey: true,
+  Pet.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      breedId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      age: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    breedId:{
-      type: DataTypes.INTEGER,
-      allowNull:false,
-    },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  }, {
-    sequelize,
-    modelName: 'Pet',
-  });
+    {
+      sequelize,
+      modelName: 'Pet',
+    }
+  );
   return Pet;
 };
