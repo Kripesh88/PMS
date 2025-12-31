@@ -1,28 +1,34 @@
-const { Pet, Breed } = require('../../../models');
+const { User, Pet, Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
 module.exports = async ({ userId, petId }) => {
   if (!userId) {
-    throw new ValidationError('User Not Authenticated', 401);
-  }
-  if (!petId) {
-    throw new ValidationError('Pet ID is required', 400);
+    throw new ValidationError('User not authenticated', 401);
   }
 
-  const pet = await Pet.findOne({
-    where: { id: petId, userId },
+  const user = await User.findOne({
+    where: { id: userId },
+    attributes: ['id', 'name', 'email', 'role'],
     include: [
       {
-        model: Breed,
-        as:'breeds',
-        attributes: ['id', 'name', 'species'], // Include whatever breed fields you want
+        model: Pet,
+        as: 'pets',   
+        where: { id: petId },
+        attributes: ['id', 'age'],
+        include: [
+          {
+            model: Breed,
+            as:'breeds',
+            attributes: ['name', 'species','image'],
+          },
+        ],
       },
     ],
   });
 
-  if (!pet) {
-    throw new ValidationError('Pet Not Found', 404);
+  if (!user) {
+    throw new ValidationError('User or Pet not found', 404);
   }
 
-  return pet;
+  return user;
 };

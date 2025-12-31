@@ -6,6 +6,7 @@ module.exports = async (req, res, next) => {
     const userData = await userLoginService({
       email: req.body.email,
       password: req.body.password,
+      petId: req.params.petId,
     });
     res.status(http.status.OK).json({
       message: 'success',

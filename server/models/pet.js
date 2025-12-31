@@ -19,10 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'users',
       });
 
+
       Pet.hasMany(models.Appointment, {
         foreignKey: 'petId',
         as: 'appointments',
       });
+      
     }
   }
   Pet.init(

@@ -1,7 +1,7 @@
 const { Pet, Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-module.exports = async ({ userId, breedId, age }) => {
+module.exports = async ({ userId, breedId, age }, transaction = null) => {
   if (!userId) {
     throw new ValidationError('User Not Authenticated', 401);
   }
@@ -9,6 +9,7 @@ module.exports = async ({ userId, breedId, age }) => {
   if (!breedId) {
     throw new ValidationError('Breed Not Found', 404);
   }
+
   if (!age) {
     throw new ValidationError('Age is required', 400);
   }
@@ -18,10 +19,14 @@ module.exports = async ({ userId, breedId, age }) => {
     throw new ValidationError('Invalid Breed Selected', 404);
   }
 
-  const pet = await Pet.create({
-    userId,
-    breedId,
-    age,
-  });
+  const pet = await Pet.create(
+    {
+      userId,
+      breedId,
+      age,
+    },
+    { transaction }
+  );
+
   return pet;
 };
