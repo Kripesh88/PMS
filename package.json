@@ -26,6 +26,7 @@
     "dotenv": "^16.5.0",
     "errorhandler": "^1.5.1",
     "express": "^5.1.0",
+    "fs": "^0.0.1-security",
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
@@ -33,6 +34,7 @@
     "morgan": "^1.10.0",
     "multer": "^2.0.0",
     "mysql2": "^3.14.1",
+    "path": "^0.12.7",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.3",
     "uuid": "^11.1.0"

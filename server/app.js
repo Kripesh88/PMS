@@ -17,6 +17,8 @@ app.use(logger('tiny'));
 app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//uploading image
+app.use('/uploads', express.static('uploads'));
 
 /* Primary App Routes. */
 app.get('/', (_req, res) => {
@@ -30,6 +32,7 @@ app.get('/', (_req, res) => {
 //  Public Routes
 // app.use('/admin', require('./routes/admin'));
 app.use('/user', require('./routes/user'));
+
 
 app.use((req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase

@@ -1,4 +1,6 @@
 'use strict';
+const fs= require('fs');
+const path= require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -22,7 +24,7 @@ module.exports = {
           name: 'German Shepherd',
           species: 'Dog',
           description: 'A smart, loyal, and highly trainable working dog.',
-          image: 'german_shepherd.jpg',
+          image: 'GermanShepherd.jpeg',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
