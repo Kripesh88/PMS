@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Breed.hasMany(models.Pet, {
-        foreignKey:'breedId',
-        as:'breeds'
+        foreignKey: 'breedId',
+        as: 'breeds',
       });
     }
   }
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       species: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('dog', 'cat'),
         allowNull: true,
       },
       description: {

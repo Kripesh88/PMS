@@ -3,7 +3,7 @@ const { ValidationError } = require('../../../errors');
 
 module.exports = async () => {
   const groomers = await Groomer.findAll({
-    attributes: ['id', 'name', 'specialization', 'experienceYears','rating','status'],
+    attributes: ['id', 'name', 'specialization', 'experienceYears','rating','status','userId'],
   });
 
   if (!groomers || groomers.length === 0) {

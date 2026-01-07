@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Appointment extends Model {
     /**
@@ -11,65 +9,81 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        Appointment.belongsTo(models.User,{
-        foreignKey:'userId',
-        as:'user',
+      Appointment.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user',
       });
-      Appointment.belongsTo(models.Pet,{
-        foreignKey:'petId',
-        as:'pet',
+      Appointment.belongsTo(models.Pet, {
+        foreignKey: 'petId',
+        as: 'pet',
       });
-      Appointment.belongsTo(models.Vet,{
-        foreignKey:'vetId',
-        as:'vet',
+      Appointment.belongsTo(models.Vet, {
+        foreignKey: 'vetId',
+        as: 'vet',
       });
-      Appointment.belongsTo(models.Groomer,{
-        foreignKey:'groomerId',
-        as:'groomer',
+      Appointment.belongsTo(models.Groomer, {
+        foreignKey: 'groomerId',
+        as: 'groomer',
       });
     }
   }
-  Appointment.init({
-    id:{
-      type: DataTypes.INTEGER,
-      autoIncrement:true,
-      primaryKey:true,
+  Appointment.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      petId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      vetId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      groomerId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      serviceType: {
+        type: DataTypes.ENUM('vet', 'grooming'),
+        allowNull: false,
+      },
+      appointmentDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.ENUM('pending', 'confirmed', 'cancelled', 'completed', 'updated'),
+        defaultValue: 'pending',
+      },
+      appointmentType: {
+        type: DataTypes.ENUM(
+          'veterinary consultation',
+          'grooming service',
+          'vaccination',
+          'general consultation'
+        ),
+        allowNull: false,
+      },
+      time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
     },
-    userId:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-    },
-    petId:{
-      type: DataTypes.INTEGER,
-      allowNull:false,
-    },
-    vetId:{
-      type: DataTypes.INTEGER,
-      allowNull:true,
-    },
-    groomerId:{
-      type: DataTypes.INTEGER,
-      allowNull:true,
-    },
-    serviceType:{
-      type: DataTypes.ENUM('Vet','Grooming'),
-      allowNull: false,
-    },
-    appointmentDate: {
-      type: DataTypes.DATE,
-      allowNull:false,
-    },
-    description:{
-      type: DataTypes.TEXT,
-      allowNull:true,
-    },
-    status:{
-      type: DataTypes.ENUM('pending','confirmed','cancelled','completed','updated'),
-      defaultValue:'pending',
-    },
-  }, {
-    sequelize,
-    modelName: 'Appointment',
-  });
+    {
+      sequelize,
+      modelName: 'Appointment',
+    }
+  );
   return Appointment;
 };
