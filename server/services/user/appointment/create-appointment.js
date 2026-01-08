@@ -1,5 +1,13 @@
-const { Appointment, Pet, Vet, Groomer } = require('../../../models');
+const { Appointment, Pet, Vet, Groomer,Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
+
+const GROOMER_ONLY_TYPES = ['grooming service'];
+
+const VET_ONLY_TYPES = [
+  'veterinary consultation',
+  'vaccination',
+  'general consultation',
+];
 
 module.exports = async ({
   userId,
@@ -8,32 +16,62 @@ module.exports = async ({
   vetId,
   groomerId,
   appointmentDate,
+  time,
+  appointmentType,
   description,
 }) => {
-  // 1. Required fields
-  if (!petId || !serviceType || !appointmentDate) {
+
+ 
+  if (!userId) {
+    throw new ValidationError('User Not Found', 404);
+  }
+
+
+  if (
+    !petId ||
+    !serviceType ||
+    !appointmentDate ||
+    !time ||
+    !appointmentType
+  ) {
     throw new ValidationError('Required fields are missing', 400);
   }
 
-  // 2. Service type validation (MATCH ENUM)
-  if (!['Vet', 'Grooming'].includes(serviceType)) {
+  // 2. Service type validation
+  if (!['vet', 'grooming'].includes(serviceType)) {
     throw new ValidationError('Invalid service type', 400);
   }
 
-  // 3. Provider validation
-  if (serviceType === 'Vet' && !vetId) {
-    throw new ValidationError('vetId is required for vet service', 400);
+  // 3. Appointment type validation
+  if (![...GROOMER_ONLY_TYPES, ...VET_ONLY_TYPES].includes(appointmentType)) {
+    throw new ValidationError('Invalid appointment type', 400);
   }
 
-  if (serviceType === 'Grooming' && !groomerId) {
-    throw new ValidationError('groomerId is required for grooming service', 400);
+  // 4. Appointment type ↔ provider mapping
+  if (GROOMER_ONLY_TYPES.includes(appointmentType)) {
+    if (serviceType !== 'grooming' || !groomerId) {
+      throw new ValidationError(
+        'Grooming service must be booked with a groomer',
+        400
+      );
+    }
   }
 
+  if (VET_ONLY_TYPES.includes(appointmentType)) {
+    if (serviceType !== 'vet' || !vetId) {
+      throw new ValidationError(
+        'This appointment type must be booked with a vet',
+        400
+      );
+    }
+  }
+
+  // 5. Prevent conflicting providers
   if (vetId && groomerId) {
     throw new ValidationError('Only one service provider is allowed', 400);
   }
 
-  // 4. Check pet ownership
+  // 6. Check pet ownership
   const pet = await Pet.findOne({
     where: {
       id: petId,
@@ -48,7 +86,7 @@ module.exports = async ({
     );
   }
 
-  // 5. Check provider existence
+  // 7. Provider existence check
   if (vetId) {
     const vet = await Vet.findByPk(vetId);
     if (!vet) {
@@ -63,14 +101,16 @@ module.exports = async ({
     }
   }
 
-  // 6. Create appointment (CAMELCASE ONLY)
+  // 8. Create appointment
   const appointment = await Appointment.create({
     userId,
     petId,
     vetId: vetId || null,
     groomerId: groomerId || null,
     serviceType,
-    appointmentDate,
+    appointmentType,
+    appointmentDate, // DATEONLY
+    time,            // TIME
     description: description || null,
     status: 'pending',
   });

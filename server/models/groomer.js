@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groomerId',
         as:'appointments'
       });
+      Groomer.hasMany(models.Schedule,{
+        foreignKey:'groomerId',
+        as:'schedules'
+      });
     }
   }
   Groomer.init({

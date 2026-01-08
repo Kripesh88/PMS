@@ -19,7 +19,7 @@ module.exports = async ({ userId, petId }) => {
           {
             model: Breed,
             as:'breeds',
-            attributes: ['name', 'species','image'],
+            attributes: ['name', 'species'],
           },
         ],
       },

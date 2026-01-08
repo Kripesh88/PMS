@@ -3,19 +3,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('../../../utils/authentication/jwt');
 
 module.exports = async ({ email, password }) => {
-  // 1. Find user along with their pet and breed
+  // 1. Find user (pets optional)
   const user = await User.findOne({
     where: { email },
     attributes: ['id', 'name', 'email', 'password', 'role'],
     include: [
       {
         model: Pet,
-        as:'pets',
+        as: 'pets',
+        required: false, 
         attributes: ['id', 'age'],
         include: [
           {
             model: Breed,
-            as:'breeds',
+            as: 'breeds',
             attributes: ['species', 'name'],
           },
         ],
@@ -23,22 +24,25 @@ module.exports = async ({ email, password }) => {
     ],
   });
 
-  if (!user) throw new Error('Invalid email or password');
+  if (!user) {
+    throw new Error('Invalid email or password');
+  }
 
-  // 2. Validate password
+  // 2. Compare password
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error('Invalid email or password');
+  if (!isMatch) {
+    throw new Error('Invalid email or password');
+  }
 
-  // 3. Generate access token
+  // 3. Generate JWT
   const accessToken = jwt.generateAccessToken({
     id: user.id,
     role: user.role,
   });
 
-  // 4. Get pet information (assuming 1 pet per user)
-  const pet = user.pets?.[0];
+  // 4. Only users have pets
+  const pet = user.role === 'user' ? user.pets?.[0] : null;
 
-  // 5. Return user + pet info
   return {
     user: {
       id: user.id,

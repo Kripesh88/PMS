@@ -22,7 +22,7 @@ module.exports = {
         {
           id: 1,
           name: 'German Shepherd',
-          species: 'Dog',
+          species: 'dog',
           description: 'A smart, loyal, and highly trainable working dog.',
           image: 'GermanShepherd.jpeg',
           createdAt: new Date(),
@@ -31,7 +31,7 @@ module.exports = {
         {
           id: 2,
           name: 'Golden Retriever',
-          species: 'Dog',
+          species: 'dog',
           description: 'Friendly, intelligent, and great with families.',
           image: 'golden_retriever.jpg',
           createdAt: new Date(),
@@ -40,7 +40,7 @@ module.exports = {
         {
           id: 3,
           name: 'Labrador Retriever',
-          species: 'Dog',
+          species: 'dog',
           description: 'Outgoing, even-tempered, and highly versatile.',
           image: 'labrador_retriever.jpg',
           createdAt: new Date(),
@@ -49,7 +49,7 @@ module.exports = {
         {
           id: 4,
           name: 'Bulldog',
-          species: 'Dog',
+          species: 'dog',
           description: 'Calm, courageous, and easygoing with a distinctive appearance.',
           image: 'bulldog.jpg',
           createdAt: new Date(),
@@ -58,7 +58,7 @@ module.exports = {
         {
           id: 5,
           name: 'Poodle',
-          species: 'Dog',
+          species: 'dog',
           description: 'Highly intelligent, active, and known for hypoallergenic fur.',
           image: 'poodle.jpg',
           createdAt: new Date(),
@@ -67,7 +67,7 @@ module.exports = {
         {
           id: 6,
           name: 'Beagle',
-          species: 'Dog',
+          species: 'dog',
           description: 'Curious, friendly, and excellent scent hound.',
           image: 'beagle.jpg',
           createdAt: new Date(),
@@ -76,7 +76,7 @@ module.exports = {
         {
           id: 7,
           name: 'Rottweiler',
-          species: 'Dog',
+          species: 'dog',
           description: 'Strong, confident, and protective working dog.',
           image: 'rottweiler.jpg',
           createdAt: new Date(),
@@ -85,7 +85,7 @@ module.exports = {
         {
           id: 8,
           name: 'Siberian Husky',
-          species: 'Dog',
+          species: 'dog',
           description: 'Energetic, friendly, and famous for blue eyes.',
           image: 'siberian_husky.jpg',
           createdAt: new Date(),
@@ -94,7 +94,7 @@ module.exports = {
         {
           id: 9,
           name: 'Doberman Pinscher',
-          species: 'Dog',
+          species: 'dog',
           description: 'Alert, fearless, and loyal guard dog.',
           image: 'doberman_pinscher.jpg',
           createdAt: new Date(),
@@ -103,7 +103,7 @@ module.exports = {
         {
           id: 10,
           name: 'Shih Tzu',
-          species: 'Dog',
+          species: 'dog',
           description: 'Affectionate toy breed with a luxurious coat.',
           image: 'shih_tzu.jpg',
           createdAt: new Date(),
@@ -112,7 +112,7 @@ module.exports = {
         {
           id: 11,
           name: 'Great Dane',
-          species: 'Dog',
+          species: 'dog',
           description: 'Gentle giants known for size and gentle temperament.',
           image: 'great_dane.jpg',
           createdAt: new Date(),
@@ -121,7 +121,7 @@ module.exports = {
         {
           id: 12,
           name: 'Chihuahua',
-          species: 'Dog',
+          species: 'dog',
           description: 'Smallest dog breed with a big personality.',
           image: 'chihuahua.jpg',
           createdAt: new Date(),
@@ -130,7 +130,7 @@ module.exports = {
         {
           id: 13,
           name: 'Boxer',
-          species: 'Dog',
+          species: 'dog',
           description: 'Energetic, playful, and loyal family guardians.',
           image: 'boxer.jpg',
           createdAt: new Date(),
@@ -139,7 +139,7 @@ module.exports = {
         {
           id: 14,
           name: 'Dachshund',
-          species: 'Dog',
+          species: 'dog',
           description: 'Lively and brave, famous for their long bodies.',
           image: 'dachshund.jpg',
           createdAt: new Date(),
@@ -148,7 +148,7 @@ module.exports = {
         {
           id: 15,
           name: 'Border Collie',
-          species: 'Dog',
+          species: 'dog',
           description: 'Extremely intelligent and energetic herding dog.',
           image: 'border_collie.jpg',
           createdAt: new Date(),
@@ -157,7 +157,7 @@ module.exports = {
         {
           id: 16,
           name: 'Australian Shepherd',
-          species: 'Dog',
+          species: 'dog',
           description: 'Smart, work-driven herders with striking eyes.',
           image: 'australian_shepherd.jpg',
           createdAt: new Date(),
@@ -166,7 +166,7 @@ module.exports = {
         {
           id: 17,
           name: 'Corgi',
-          species: 'Dog',
+          species: 'dog',
           description: 'Small herding dogs with big ears and bigger personality.',
           image: 'corgi.jpg',
           createdAt: new Date(),
@@ -175,7 +175,7 @@ module.exports = {
         {
           id: 18,
           name: 'Pug',
-          species: 'Dog',
+          species: 'dog',
           description: 'Charming, mischievous with a wrinkly face.',
           image: 'pug.jpg',
           createdAt: new Date(),
@@ -184,7 +184,7 @@ module.exports = {
         {
           id: 19,
           name: 'Mastiff',
-          species: 'Dog',
+          species: 'dog',
           description: 'Massive, powerful, yet gentle protectors.',
           image: 'mastiff.jpg',
           createdAt: new Date(),
@@ -193,7 +193,7 @@ module.exports = {
         {
           id: 20,
           name: 'Akita',
-          species: 'Dog',
+          species: 'dog',
           description: 'Loyal and dignified dogs originating from Japan.',
           image: 'akita.jpg',
           createdAt: new Date(),
@@ -202,7 +202,7 @@ module.exports = {
         {
           id: 21,
           name: 'Shiba Inu',
-          species: 'Dog',
+          species: 'dog',
           description: 'Alert, agile, fox-like Japanese breed.',
           image: 'shiba_inu.jpg',
           createdAt: new Date(),
@@ -211,7 +211,7 @@ module.exports = {
         {
           id: 22,
           name: 'French Bulldog',
-          species: 'Dog',
+          species: 'dog',
           description: 'Playful, adaptable, and perfect for apartments.',
           image: 'french_bulldog.jpg',
           createdAt: new Date(),
@@ -220,7 +220,7 @@ module.exports = {
         {
           id: 23,
           name: 'Yorkshire Terrier',
-          species: 'Dog',
+          species: 'dog',
           description: 'Tiny but brave with a silky coat.',
           image: 'yorkshire_terrier.jpg',
           createdAt: new Date(),
@@ -229,7 +229,7 @@ module.exports = {
         {
           id: 24,
           name: 'Bernese Mountain Dog',
-          species: 'Dog',
+          species: 'dog',
           description: 'Large, gentle dogs known for tri-color coats.',
           image: 'bernese_mountain_dog.jpg',
           createdAt: new Date(),
@@ -238,7 +238,7 @@ module.exports = {
         {
           id: 25,
           name: 'Cocker Spaniel',
-          species: 'Dog',
+          species: 'dog',
           description: 'Sweet, affectionate, and great family dogs.',
           image: 'cocker_spaniel.jpg',
           createdAt: new Date(),
@@ -249,7 +249,7 @@ module.exports = {
         {
           id: 26,
           name: 'Persian Cat',
-          species: 'Cat',
+          species: 'cat',
           description: 'Quiet, gentle with long fluffy fur.',
           image: 'persian_cat.jpg',
           createdAt: new Date(),
@@ -258,7 +258,7 @@ module.exports = {
         {
           id: 27,
           name: 'Maine Coon',
-          species: 'Cat',
+          species: 'cat',
           description: 'Large, sociable cats known as gentle giants.',
           image: 'maine_coon.jpg',
           createdAt: new Date(),
@@ -267,7 +267,7 @@ module.exports = {
         {
           id: 28,
           name: 'Siamese Cat',
-          species: 'Cat',
+          species: 'cat',
           description: 'Vocal, affectionate, and sleek with blue eyes.',
           image: 'siamese_cat.jpg',
           createdAt: new Date(),
@@ -276,7 +276,7 @@ module.exports = {
         {
           id: 29,
           name: 'Bengal Cat',
-          species: 'Cat',
+          species: 'cat',
           description: 'Energetic cats with leopard-like markings.',
           image: 'bengal_cat.jpg',
           createdAt: new Date(),
@@ -285,7 +285,7 @@ module.exports = {
         {
           id: 30,
           name: 'Ragdoll',
-          species: 'Cat',
+          species: 'cat',
           description: 'Calm, fluffy cats that go limp when held.',
           image: 'ragdoll_cat.jpg',
           createdAt: new Date(),
@@ -294,7 +294,7 @@ module.exports = {
         {
           id: 31,
           name: 'British Shorthair',
-          species: 'Cat',
+          species: 'cat',
           description: 'Calm, chunky cats with dense coats.',
           image: 'british_shorthair.jpg',
           createdAt: new Date(),
@@ -303,7 +303,7 @@ module.exports = {
         {
           id: 32,
           name: 'Sphynx',
-          species: 'Cat',
+          species: 'cat',
           description: 'Hairless, affectionate, and attention-loving.',
           image: 'sphynx.jpg',
           createdAt: new Date(),
@@ -312,7 +312,7 @@ module.exports = {
         {
           id: 33,
           name: 'Scottish Fold',
-          species: 'Cat',
+          species: 'cat',
           description: 'Cute folded ears and sweet personality.',
           image: 'scottish_fold.jpg',
           createdAt: new Date(),
@@ -321,7 +321,7 @@ module.exports = {
         {
           id: 34,
           name: 'Abyssinian',
-          species: 'Cat',
+          species: 'cat',
           description: 'Active, playful, and one of the oldest breeds.',
           image: 'abyssinian.jpg',
           createdAt: new Date(),
@@ -330,7 +330,7 @@ module.exports = {
         {
           id: 35,
           name: 'Birman',
-          species: 'Cat',
+          species: 'cat',
           description: 'Blue-eyed, long-haired cats with white paws.',
           image: 'birman.jpg',
           createdAt: new Date(),
@@ -339,7 +339,7 @@ module.exports = {
         {
           id: 36,
           name: 'Savannah',
-          species: 'Cat',
+          species: 'cat',
           description: 'Tall, exotic cats with wild ancestry.',
           image: 'savannah.jpg',
           createdAt: new Date(),
@@ -348,7 +348,7 @@ module.exports = {
         {
           id: 37,
           name: 'Russian Blue',
-          species: 'Cat',
+          species: 'cat',
           description: 'Calm, elegant cats with silver-blue fur.',
           image: 'russian_blue.jpg',
           createdAt: new Date(),
@@ -357,7 +357,7 @@ module.exports = {
         {
           id: 38,
           name: 'Norwegian Forest Cat',
-          species: 'Cat',
+          species: 'cat',
           description: 'Large, sturdy cats built for cold climates.',
           image: 'norwegian_forest_cat.jpg',
           createdAt: new Date(),
@@ -366,7 +366,7 @@ module.exports = {
         {
           id: 39,
           name: 'American Shorthair',
-          species: 'Cat',
+          species: 'cat',
           description: 'Friendly, adaptable, and long-lived breed.',
           image: 'american_shorthair.jpg',
           createdAt: new Date(),
@@ -375,7 +375,7 @@ module.exports = {
         {
           id: 40,
           name: 'Himalayan',
-          species: 'Cat',
+          species: 'cat',
           description: 'Persian-like cats with colorpoint fur.',
           image: 'himalayan.jpg',
           createdAt: new Date(),
@@ -384,7 +384,7 @@ module.exports = {
         {
           id: 41,
           name: 'Tonkinese',
-          species: 'Cat',
+          species: 'cat',
           description: 'Social, vocal cats with striking eyes.',
           image: 'tonkinese.jpg',
           createdAt: new Date(),
@@ -393,7 +393,7 @@ module.exports = {
         {
           id: 42,
           name: 'Oriental',
-          species: 'Cat',
+          species: 'cat',
           description: 'Elegant cats with big ears and slim bodies.',
           image: 'oriental.jpg',
           createdAt: new Date(),
@@ -402,7 +402,7 @@ module.exports = {
         {
           id: 43,
           name: 'Cornish Rex',
-          species: 'Cat',
+          species: 'cat',
           description: 'Curly-coated cats with playful nature.',
           image: 'cornish_rex.jpg',
           createdAt: new Date(),
@@ -411,7 +411,7 @@ module.exports = {
         {
           id: 44,
           name: 'Devon Rex',
-          species: 'Cat',
+          species: 'cat',
           description: 'Elfin appearance and soft, wavy coat.',
           image: 'devon_rex.jpg',
           createdAt: new Date(),
@@ -420,7 +420,7 @@ module.exports = {
         {
           id: 45,
           name: 'Turkish Van',
-          species: 'Cat',
+          species: 'cat',
           description: 'Known as swimming cats with unique markings.',
           image: 'turkish_van.jpg',
           createdAt: new Date(),
@@ -429,7 +429,7 @@ module.exports = {
         {
           id: 46,
           name: 'Japanese Bobtail',
-          species: 'Cat',
+          species: 'cat',
           description: 'Short tail and playful, social personality.',
           image: 'japanese_bobtail.jpg',
           createdAt: new Date(),
@@ -438,7 +438,7 @@ module.exports = {
         {
           id: 47,
           name: 'Manx',
-          species: 'Cat',
+          species: 'cat',
           description: 'Tail-less breed known for strong hind legs.',
           image: 'manx.jpg',
           createdAt: new Date(),
@@ -447,7 +447,7 @@ module.exports = {
         {
           id: 48,
           name: 'Chartreux',
-          species: 'Cat',
+          species: 'cat',
           description: 'Quiet, muscular, blue-gray cats from France.',
           image: 'chartreux.jpg',
           createdAt: new Date(),
@@ -456,7 +456,7 @@ module.exports = {
         {
           id: 49,
           name: 'Nebelung',
-          species: 'Cat',
+          species: 'cat',
           description: 'Long-haired Russian Blue with silky fur.',
           image: 'nebelung.jpg',
           createdAt: new Date(),
@@ -465,7 +465,7 @@ module.exports = {
         {
           id: 50,
           name: 'Egyptian Mau',
-          species: 'Cat',
+          species: 'cat',
           description: 'Spotted, elegant cats known for speed.',
           image: 'egyptian_mau.jpg',
           createdAt: new Date(),
