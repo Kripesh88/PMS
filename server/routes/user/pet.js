@@ -7,5 +7,5 @@ const petController = require('../../controllers/user/pet');
 // Pet routes
 
 router.route('/:userId/create').post(petController.createPet);
-router.route('/:userId/petProfile/:petId/get').get(petController.getPet);
+router.route('/:userId/petProfile/get').get(petController.getPet);
 module.exports = router;
