@@ -1,7 +1,7 @@
 const { User, Pet, Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-module.exports = async ({ userId, petId }) => {
+module.exports = async ({ userId }) => {
   if (!userId) {
     throw new ValidationError('User not authenticated', 401);
   }
@@ -12,14 +12,13 @@ module.exports = async ({ userId, petId }) => {
     include: [
       {
         model: Pet,
-        as: 'pets',   
-        where: { id: petId },
-        attributes: ['id', 'age'],
+        as: 'pets',
+        attributes: ['id', 'age', 'name', 'gender', 'weight', 'description', 'medicalHistory'],
         include: [
           {
             model: Breed,
-            as:'breeds',
-            attributes: ['name', 'species'],
+            as: 'breed',
+            attributes: ['id', 'name', 'species'],
           },
         ],
       },
@@ -27,7 +26,7 @@ module.exports = async ({ userId, petId }) => {
   });
 
   if (!user) {
-    throw new ValidationError('User or Pet not found', 404);
+    throw new ValidationError('User not found', 404);
   }
 
   return user;

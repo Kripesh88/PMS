@@ -1,32 +1,40 @@
 const { Pet, Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-module.exports = async ({ userId, breedId, age }, transaction = null) => {
+module.exports = async (
+  { userId, name, petType, breedId, age, gender, weight, description, medicalHistory },
+  transaction = null
+) => {
   if (!userId) {
-    throw new ValidationError('User Not Authenticated', 401);
+    throw new ValidationError('User not authenticated', 401);
   }
 
+  // Registration MINIMUM
   if (!breedId) {
-    throw new ValidationError('Breed Not Found', 404);
-  }
-
-  if (!age) {
-    throw new ValidationError('Age is required', 400);
+    throw new ValidationError('Breed is required', 400);
   }
 
   const breed = await Breed.findByPk(breedId);
   if (!breed) {
-    throw new ValidationError('Invalid Breed Selected', 404);
+    throw new ValidationError('Invalid breed selected', 404);
   }
 
-  const pet = await Pet.create(
+  return Pet.create(
     {
       userId,
+
+      // Optional (post-login)
+      name: name || null,
+      petType: petType || breed.species, // smart default
+      gender: gender || null,
+      weight: weight || null,
+      description: description || null,
+      medicalHistory: medicalHistory || null,
+
+      // Shared
       breedId,
-      age,
+      age: age || null,
     },
     { transaction }
   );
-
-  return pet;
 };

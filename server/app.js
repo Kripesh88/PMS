@@ -32,6 +32,8 @@ app.get('/', (_req, res) => {
 //  Public Routes
 // app.use('/admin', require('./routes/admin'));
 app.use('/user', require('./routes/user'));
+app.use('/admin', require('./routes/groomer'));
+app.use('/admin', require('./routes/vet'));
 
 
 app.use((req, res, next) => {
