@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Vet extends Model {
     /**
@@ -11,46 +9,54 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Vet.hasMany(models.Appointment,{
+      Vet.hasMany(models.Appointment, {
         foreignKey: 'vetId',
-        as:'appointments'
+        as: 'appointments',
       });
-      Vet.hasMany(models.Schedule,{
-        foreignKey:'vetId',
-        as:'schedules'
+      Vet.hasMany(models.Schedule, {
+        foreignKey: 'vetId',
+        as: 'schedules',
+      });
+      Vet.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'users',
       });
     }
   }
-  Vet.init({
-    id:{
-      type: DataTypes.INTEGER,
-      autoIncrement:true,
-      primaryKey:true,
+  Vet.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+
+      specialization: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      experienceYears: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.ENUM('Available', 'Busy'),
+        allowNull: true,
+      },
     },
-    name:{
-      type: DataTypes.STRING,
-      allowNull:false,
-    },
-    specialization:{
-      type: DataTypes.STRING,
-      allowNull:false,
-    },
-    experienceYears: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    rating:{
-      type: DataTypes.FLOAT,
-      allowNull:true,
-    },
-    status:{
-      type: DataTypes.ENUM('Available','Busy'),
-      allowNull:true,
-    },
-  }, {
-    sequelize,
-    modelName: 'Vet',
-    timestamps:false,
-  });
+    {
+      sequelize,
+      modelName: 'Vet',
+      timerstamps: true,
+    }
+  );
   return Vet;
 };

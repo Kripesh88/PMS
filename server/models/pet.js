@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Pet.belongsTo(models.Breed, {
         foreignKey: 'breedId',
-        as: 'breed',
+        as: 'breeds',
       });
 
       Pet.belongsTo(models.User, {
@@ -19,12 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user',
       });
 
-
       Pet.hasMany(models.Appointment, {
         foreignKey: 'petId',
         as: 'appointments',
       });
-      
     }
   }
   Pet.init(
@@ -46,27 +44,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      name:{
+      name: {
         type: DataTypes.STRING,
-        allowNull:true,
+        allowNull: true,
       },
-      gender:{
-        type:DataTypes.ENUM('male','female'),
-        allowNull:true,
+      gender: {
+        type: DataTypes.ENUM('male', 'female'),
+        allowNull: true,
       },
-      weight:{
+      weight: {
         type: DataTypes.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
-      description:{
+      description: {
         type: DataTypes.TEXT,
-        allowNull:true
+        allowNull: true,
       },
-      medicalHistory:{
-        type:DataTypes.TEXT,
-        allowNull:true
+      medicalHistory: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
-      },
+    },
     {
       sequelize,
       modelName: 'Pet',

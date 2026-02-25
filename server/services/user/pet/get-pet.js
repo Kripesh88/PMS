@@ -1,15 +1,20 @@
-const { User, Pet, Breed } = require('../../../models');
+const { User, Pet, Breed, Role } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-module.exports = async ({ userId }) => {
-  if (!userId) {
+module.exports = async ({ user }) => {
+  if (!user) {
     throw new ValidationError('User not authenticated', 401);
   }
 
-  const user = await User.findOne({
-    where: { id: userId },
-    attributes: ['id', 'name', 'email', 'role'],
+  const users = await User.findOne({
+    where: { id: user.id },
+    attributes: ['id', 'name', 'email'],
     include: [
+      {
+        model: Role,
+        as: 'roles',
+        attributes: ['id', 'name'],
+      },
       {
         model: Pet,
         as: 'pets',
@@ -17,7 +22,7 @@ module.exports = async ({ userId }) => {
         include: [
           {
             model: Breed,
-            as: 'breed',
+            as: 'breeds',
             attributes: ['id', 'name', 'species'],
           },
         ],
@@ -25,9 +30,9 @@ module.exports = async ({ userId }) => {
     ],
   });
 
-  if (!user) {
+  if (!users) {
     throw new ValidationError('User not found', 404);
   }
 
-  return user;
+  return users;
 };

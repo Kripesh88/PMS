@@ -1,16 +1,12 @@
-const { Appointment, Pet, Vet, Groomer,Breed } = require('../../../models');
+const { Appointment, Pet, Vet, Groomer, Breed } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
 const GROOMER_ONLY_TYPES = ['grooming service'];
 
-const VET_ONLY_TYPES = [
-  'veterinary consultation',
-  'vaccination',
-  'general consultation',
-];
+const VET_ONLY_TYPES = ['veterinary consultation', 'vaccination', 'general consultation'];
 
 module.exports = async ({
-  userId,
+  user,
   petId,
   serviceType,
   vetId,
@@ -20,20 +16,11 @@ module.exports = async ({
   appointmentType,
   description,
 }) => {
-
- 
-  if (!userId) {
+  if (!user) {
     throw new ValidationError('User Not Found', 404);
   }
 
-
-  if (
-    !petId ||
-    !serviceType ||
-    !appointmentDate ||
-    !time ||
-    !appointmentType
-  ) {
+  if (!petId || !serviceType || !appointmentDate || !time || !appointmentType) {
     throw new ValidationError('Required fields are missing', 400);
   }
 
@@ -50,19 +37,13 @@ module.exports = async ({
   // 4. Appointment type ↔ provider mapping
   if (GROOMER_ONLY_TYPES.includes(appointmentType)) {
     if (serviceType !== 'grooming' || !groomerId) {
-      throw new ValidationError(
-        'Grooming service must be booked with a groomer',
-        400
-      );
+      throw new ValidationError('Grooming service must be booked with a groomer', 400);
     }
   }
 
   if (VET_ONLY_TYPES.includes(appointmentType)) {
     if (serviceType !== 'vet' || !vetId) {
-      throw new ValidationError(
-        'This appointment type must be booked with a vet',
-        400
-      );
+      throw new ValidationError('This appointment type must be booked with a vet', 400);
     }
   }
 
@@ -75,15 +56,12 @@ module.exports = async ({
   const pet = await Pet.findOne({
     where: {
       id: petId,
-      userId,
+      userId: user.id,
     },
   });
 
   if (!pet) {
-    throw new ValidationError(
-      'Pet not found or does not belong to user',
-      404
-    );
+    throw new ValidationError('Pet not found or does not belong to user', 404);
   }
 
   // 7. Provider existence check
@@ -103,14 +81,14 @@ module.exports = async ({
 
   // 8. Create appointment
   const appointment = await Appointment.create({
-    userId,
+    userId: user.id,
     petId,
     vetId: vetId || null,
     groomerId: groomerId || null,
     serviceType,
     appointmentType,
     appointmentDate, // DATEONLY
-    time,            // TIME
+    time, // TIME
     description: description || null,
     status: 'pending',
   });

@@ -4,7 +4,7 @@ const createAppointmentService = require('../../../services/user/appointment/cre
 module.exports = async (req, res, next) => {
   try {
     const appointment = await createAppointmentService({
-      userId: req.params.userId,        
+      user:req.user,        
       ...req.body,
     });
 

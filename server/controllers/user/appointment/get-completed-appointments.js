@@ -4,7 +4,7 @@ const http= require('http-status');
 module.exports= async(req,res,next)=>{
     try{
         const completedAppointment= await getCompletedAppointmentsServices({
-            userId: req.params.userId,
+            user: req.user,
         });
         res.status(http.status.OK).json({
             message:'success',
