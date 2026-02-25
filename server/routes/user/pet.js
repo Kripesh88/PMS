@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const petController = require('../../controllers/user/pet');
-
+const authMiddleware = require('../../middleware/auth-middleware');
 // USER
 
 // Pet routes
 
-router.route('/:userId/create').post(petController.createPet);
-router.route('/:userId/petProfile/get').get(petController.getPet);
+router.route('/:id/create').post(authMiddleware, petController.createPet);
+router.route('/:id/petProfile/get').get(authMiddleware, petController.getPet);
 module.exports = router;

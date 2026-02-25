@@ -4,7 +4,7 @@ const http = require('http-status');
 module.exports = async (req, res, next) => {
   try {
     const pet = await createPetService({
-      userId: req.params.userId,
+      user: req.user,
       ...req.body,
     });
 

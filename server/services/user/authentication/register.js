@@ -1,12 +1,13 @@
 const { User, Breed, sequelize } = require('../../../models');
 const bcrypt = require('bcryptjs');
 const createPet = require('../../../services/user/pet/create-pet');
+const role = require('../../../models/role');
 
-module.exports = async ({ name, email, password, breedId, age }) => {
+module.exports = async ({ name, email, password, phone, breedId, age }) => {
   const transaction = await sequelize.transaction();
 
   try {
-    // 1. Check if email exists
+    // 1. Check email
     const exists = await User.findOne({ where: { email } });
     if (exists) {
       throw new Error('Email already registered');
@@ -25,20 +26,22 @@ module.exports = async ({ name, email, password, breedId, age }) => {
     // 3. Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4. Create user
+    // 4. Create user with roleId = 2 (User)
     const user = await User.create(
       {
         name,
         email,
+        phone,
         password: hashedPassword,
+        roleId: 2,
       },
       { transaction }
     );
 
-    // 5. Create pet immediately after user
+    // 5. Create pet
     const pet = await createPet(
       {
-        userId: user.id,
+        user,
         breedId,
         age,
       },
@@ -51,7 +54,8 @@ module.exports = async ({ name, email, password, breedId, age }) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      phone: user.phone,
+      role: user.roleId,
       pet: {
         id: pet.id,
         breed: findSpecies.name,

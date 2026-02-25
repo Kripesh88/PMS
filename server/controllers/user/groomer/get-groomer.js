@@ -3,7 +3,9 @@ const http = require('http-status');
 
 module.exports = async (req, res, next) => {
   try {
-    const data = await getGroomerService();
+    const data = await getGroomerService(
+      user= req.user,
+    );
 
     res.status(http.status.OK).json({
       message: 'success',

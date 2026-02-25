@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
    
 
     const pet = await getPetService({ 
-      userId : req.params.userId,
+      user: req.user,
      });
 
     return res.status(http.status.OK).json({

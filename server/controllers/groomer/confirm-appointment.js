@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   try {
     const confirmAppointment = await confirmAppointmentServices({
       appointmentId: Number(req.params.appointmentId),
-      groomerId: Number(req.params.groomerId),
+      user:req.user,
       status: req.body.status,
     });
     res.status(http.status.OK).json({

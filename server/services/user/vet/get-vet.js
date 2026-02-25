@@ -1,7 +1,10 @@
 const { Vet } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-module.exports = async () => {
+module.exports = async (user) => {
+  if(!user) {
+    throw new ValidationError('User not authenticated', 401);
+  }
   const vets = await Vet.findAll({
     attributes: ['id', 'name', 'specialization', 'experienceYears','rating','status','userId'],
   });

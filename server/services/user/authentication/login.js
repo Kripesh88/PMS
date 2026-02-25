@@ -1,62 +1,69 @@
-const { User, Pet, Breed } = require('../../../models');
+const jwt = require('jsonwebtoken');
+const { User, Role, Pet, Breed } = require('../../../models');
+const { ValidationError } = require('../../../errors');
 const bcrypt = require('bcryptjs');
-const jwt = require('../../../utils/authentication/jwt');
 
 module.exports = async ({ email, password }) => {
-  // 1. Find user (pets optional)
+  if (!email || !password) {
+    throw new ValidationError('Email and Password Not Found', 404);
+  }
+
   const user = await User.findOne({
     where: { email },
-    attributes: ['id', 'name', 'email', 'password', 'role'],
     include: [
+      {
+        model: Role,
+        as: 'roles', // matches User.belongsTo(Role)
+        attributes: ['id', 'name'],
+      },
       {
         model: Pet,
         as: 'pets',
-        required: false, 
+        required: false,
         attributes: ['id', 'age'],
-        include: [
-          {
-            model: Breed,
-            as: 'breeds',
-            attributes: ['species', 'name'],
-          },
-        ],
+        include: [{ model: Breed, as: 'breeds', attributes: ['id', 'name', 'species'] }],
       },
     ],
   });
 
-  if (!user) {
-    throw new Error('Invalid email or password');
-  }
+  if (!user) throw new ValidationError('User Not Found', 404);
 
-  // 2. Compare password
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new Error('Invalid email or password');
-  }
+  // Compare password
+  const isValid = await bcrypt.compare(password, user.password);
+  
+  if (!isValid) throw new ValidationError('Invalid Credentials', 401);
 
-  // 3. Generate JWT
-  const accessToken = jwt.generateAccessToken({
-    id: user.id,
-    role: user.role,
-  });
+  // Safe role access
+  const roleName = user.roles?.name || 'User';
 
-  // 4. Only users have pets
-  const pet = user.role === 'user' ? user.pets?.[0] : null;
+  const token = jwt.sign(
+    {
+      id: user.id,
+      roleId: user.roleId,
+      roleName,
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '7d' }
+  );
+
+  // Only normal Users have pets
+  const pet = roleName === 'User' ? user.pets?.[0] : null;
 
   return {
+    token,
     user: {
       id: user.id,
-      name: user.name,
       email: user.email,
-      role: user.role,
-      accessToken,
+      roleId: user.roleId,
+      roleName,
     },
     pet: pet
       ? {
           id: pet.id,
           age: pet.age,
-          species: pet.breeds.species,
-          breed: pet.breeds.name,
+          species: pet.breeds?.species,
+          breed: pet.breeds?.name,
         }
       : null,
   };

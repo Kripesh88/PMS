@@ -17,6 +17,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         as: 'appointments',
       });
+      User.belongsTo(models.Role, {
+        foreignKey: 'roleId',
+        as: 'roles',
+      });
+      User.hasMany(models.Vet, {
+        foreignKey: 'userId',
+        as: 'vets',
+      });
+      User.hasMany(models.Groomer, {
+        foreignKey: 'userId',
+        as: 'groomers',
+      });
     }
   }
   User.init(
@@ -37,15 +49,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
 
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
 
-      role: {
-        type: DataTypes.ENUM('user', 'vet','groomer'),
-        defaultValue: 'user',
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 2,
       },
     },
     {

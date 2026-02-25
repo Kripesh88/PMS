@@ -34,6 +34,7 @@ app.get('/', (_req, res) => {
 app.use('/user', require('./routes/user'));
 app.use('/admin', require('./routes/groomer'));
 app.use('/admin', require('./routes/vet'));
+app.use('/Admin',require('./routes/admin'));
 
 
 app.use((req, res, next) => {

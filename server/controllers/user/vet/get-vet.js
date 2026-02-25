@@ -3,7 +3,9 @@ const http = require('http-status');
 
 module.exports = async (req, res, next) => {
   try {
-    const data = await getVetService();
+    const data = await getVetService({
+      user: req.user,
+    });
 
     res.status(http.status.OK).json({
       message: 'success',
