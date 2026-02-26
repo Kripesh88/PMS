@@ -3,7 +3,7 @@ const { ValidationError } = require('../../errors');
 
 const ALLOWED_STATUS = ['confirmed', 'completed', 'cancelled'];
 
-module.exports = async ({ appointmentId, user, status }) => {
+module.exports = async ({ appointmentId, user, status, time, appointmentDate }) => {
   if (!user) {
     throw new ValidationError('User Not Found', 404);
   }
@@ -14,7 +14,7 @@ module.exports = async ({ appointmentId, user, status }) => {
   }
 
   // 2. Status validation
-  if (!ALLOWED_STATUS.includes(status)) {
+  if (status && !ALLOWED_STATUS.includes(status)) {
     throw new ValidationError('Invalid status', 400);
   }
 
@@ -52,8 +52,18 @@ module.exports = async ({ appointmentId, user, status }) => {
     throw new ValidationError('Appointment must be confirmed before completion', 400);
   }
 
-  // 7. Update status
-  appointment.status = status;
+  if (status) {
+    appointment.status = status;
+  }
+
+  if (appointmentDate) {
+    appointment.appointmentDate = appointmentDate;
+  }
+
+  if (time) {
+    appointment.time = time;
+  }
+
   await appointment.save();
 
   return appointment;
