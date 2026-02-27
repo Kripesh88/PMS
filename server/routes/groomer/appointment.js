@@ -15,4 +15,8 @@ router
     confirmAppointmentController.confirmAppointment
   );
 
+router
+  .route('/list')
+  .get(authMiddleware, roleMiddleware('Groomer'), confirmAppointmentController.listAppointments);
+
 module.exports = router;

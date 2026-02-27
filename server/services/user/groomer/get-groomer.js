@@ -6,7 +6,7 @@ module.exports = async (user) => {
     throw new ValidationError('User not authenticated', 401);
   }
   const groomers = await Groomer.findAll({
-    attributes: ['id', 'name', 'specialization', 'experienceYears', 'rating', 'status', 'userId'],
+    attributes: ['id', 'email', 'specialization', 'experienceYears', 'rating', 'status', 'userId'],
   });
 
   if (!groomers || groomers.length === 0) {

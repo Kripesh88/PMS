@@ -9,6 +9,10 @@ const roleMiddleware = require('../../middleware/role-middleware');
 
 router
   .route('/:vetId/appointment/:appointmentId/status')
-  .patch(authMiddleware,roleMiddleware('Vet'),confirmAppointmentController.confirmAppointment);
+  .patch(authMiddleware, roleMiddleware('Vet'), confirmAppointmentController.confirmAppointment);
+
+router
+  .route('/list')
+  .get(authMiddleware, roleMiddleware('Vet'), confirmAppointmentController.listAppointments);
 
 module.exports = router;

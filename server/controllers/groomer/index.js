@@ -1,4 +1,6 @@
-const confirmAppointment= require('./confirm-appointment');
-module.exports={
-    confirmAppointment,
+const confirmAppointment = require('./confirm-appointment');
+const listAppointments = require('./list-appointments');
+module.exports = {
+  confirmAppointment,
+  listAppointments,
 };
