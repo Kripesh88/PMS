@@ -35,6 +35,7 @@ app.use('/user', require('./routes/user'));
 app.use('/admin', require('./routes/groomer'));
 app.use('/admin', require('./routes/vet'));
 app.use('/Admin',require('./routes/admin'));
+app.use('/info', require('./routes/notification'))
 
 
 app.use((req, res, next) => {
