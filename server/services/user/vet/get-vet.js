@@ -1,4 +1,4 @@
-const { Vet } = require('../../../models');
+const { Vet, User } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
 module.exports = async (user) => {
@@ -7,6 +7,13 @@ module.exports = async (user) => {
   }
   const vets = await Vet.findAll({
     attributes: ['id', 'specialization', 'experienceYears','rating','status','userId'],
+    include: [
+      {
+        model:User,
+        as: 'users',
+        attributes: ['id', 'name', 'email'],
+     },
+    ],
   });
 
   if (!vets || vets.length === 0) {

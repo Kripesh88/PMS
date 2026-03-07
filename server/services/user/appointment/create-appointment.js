@@ -1,8 +1,9 @@
-const { Appointment, Pet, Vet, Groomer, Breed } = require('../../../models');
+const { Appointment, Pet, Vet, Groomer } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
-const GROOMER_ONLY_TYPES = ['grooming service'];
+const createNotification = require('../../notification/create-notification');
 
+const GROOMER_ONLY_TYPES = ['grooming service'];
 const VET_ONLY_TYPES = ['veterinary consultation', 'vaccination', 'general consultation'];
 
 module.exports = async ({
@@ -24,17 +25,14 @@ module.exports = async ({
     throw new ValidationError('Required fields are missing', 400);
   }
 
-  // 2. Service type validation
   if (!['vet', 'grooming'].includes(serviceType)) {
     throw new ValidationError('Invalid service type', 400);
   }
 
-  // 3. Appointment type validation
   if (![...GROOMER_ONLY_TYPES, ...VET_ONLY_TYPES].includes(appointmentType)) {
     throw new ValidationError('Invalid appointment type', 400);
   }
 
-  // 4. Appointment type ↔ provider mapping
   if (GROOMER_ONLY_TYPES.includes(appointmentType)) {
     if (serviceType !== 'grooming' || !groomerId) {
       throw new ValidationError('Grooming service must be booked with a groomer', 400);
@@ -47,12 +45,10 @@ module.exports = async ({
     }
   }
 
-  // 5. Prevent conflicting providers
   if (vetId && groomerId) {
     throw new ValidationError('Only one service provider is allowed', 400);
   }
 
-  // 6. Check pet ownership
   const pet = await Pet.findOne({
     where: {
       id: petId,
@@ -64,22 +60,28 @@ module.exports = async ({
     throw new ValidationError('Pet not found or does not belong to user', 404);
   }
 
-  // 7. Provider existence check
+  let providerUserId = null;
+
   if (vetId) {
     const vet = await Vet.findByPk(vetId);
+
     if (!vet) {
       throw new ValidationError('Vet not found', 404);
     }
+
+    providerUserId = vet.userId;
   }
 
   if (groomerId) {
     const groomer = await Groomer.findByPk(groomerId);
+
     if (!groomer) {
       throw new ValidationError('Groomer not found', 404);
     }
+
+    providerUserId = groomer.userId;
   }
 
-  // 8. Create appointment
   const appointment = await Appointment.create({
     userId: user.id,
     petId,
@@ -87,10 +89,18 @@ module.exports = async ({
     groomerId: groomerId || null,
     serviceType,
     appointmentType,
-    appointmentDate, // DATEONLY
-    time, // TIME
+    appointmentDate,
+    time,
     description: description || null,
     status: 'pending',
+  });
+
+  await createNotification({
+    senderId: user.id,
+    receiverId: providerUserId,
+    appointmentId: appointment.id,
+    title: 'New Appointment Booked',
+    message: `New appointment scheduled on ${appointmentDate} at ${time}`,
   });
 
   return appointment;

@@ -1,5 +1,6 @@
 const { Appointment, Vet } = require('../../models');
 const { ValidationError } = require('../../errors');
+const createNotification = require('../notification/create-notification');
 
 const ALLOWED_STATUS = ['confirmed', 'completed', 'cancelled'];
 
@@ -22,7 +23,6 @@ module.exports = async ({ appointmentId, user, status, time, appointmentDate }) 
     throw new ValidationError('Appointment not found', 404);
   }
 
-  // 3. Vet existence
   const vet = await Vet.findOne({
     where: { userId: user.id },
   });
@@ -60,6 +60,14 @@ module.exports = async ({ appointmentId, user, status, time, appointmentDate }) 
   }
 
   await appointment.save();
+
+  await createNotification({
+    senderId: user.id,
+    receiverId: appointment.userId,
+    appointmentId: appointment.id,
+    title: 'Appointment Updated',
+    message: `Your appointment on ${appointment.appointmentDate} at ${appointment.time} is now ${appointment.status}`,
+  });
 
   return appointment;
 };
