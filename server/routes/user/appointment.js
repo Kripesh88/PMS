@@ -18,4 +18,8 @@ router
   .route('/:userId/cancelled')
   .get(authMiddleware, userAppointmentController.getCancelledAppointments);
 
+router
+  .route('/:id/reschedule')
+  .put(authMiddleware, userAppointmentController.rescheduleAppointment);
+
 module.exports = router;

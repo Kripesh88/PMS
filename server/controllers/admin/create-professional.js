@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
     });
     res.status(http.status.OK).json({
       success: true,
-      message: 'Status updated by Groomer',
+      message: 'Professional created successfully',
       data: professionals,
     });
   } catch (err) {

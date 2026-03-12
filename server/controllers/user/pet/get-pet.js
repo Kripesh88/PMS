@@ -3,14 +3,12 @@ const http = require('http-status');
 
 module.exports = async (req, res, next) => {
   try {
-   
-
-    const pet = await getPetService({ 
+    const pet = await getPetService({
       user: req.user,
-     });
+    });
 
     return res.status(http.status.OK).json({
-      message:'success',
+      message: 'success',
       data: pet,
     });
   } catch (error) {
