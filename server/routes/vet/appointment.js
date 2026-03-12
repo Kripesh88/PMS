@@ -15,4 +15,6 @@ router
   .route('/list')
   .get(authMiddleware, roleMiddleware('Vet'), confirmAppointmentController.listAppointments);
 
+router.route('/profile/update').put(authMiddleware, confirmAppointmentController.updateProfile);
+
 module.exports = router;

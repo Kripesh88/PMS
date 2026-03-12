@@ -1,13 +1,7 @@
 const { Notification } = require('../../models');
 const { ValidationError } = require('../../errors');
 
-module.exports = async ({
-  senderId,
-  receiverId,
-  appointmentId,
-  title,
-  message,
-}) => {
+module.exports = async ({ senderId, receiverId, appointmentId, title, message }) => {
   if (!senderId || !receiverId || !title || !message) {
     throw new ValidationError('Missing notification fields', 400);
   }

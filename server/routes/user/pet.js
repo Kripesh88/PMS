@@ -8,4 +8,5 @@ const authMiddleware = require('../../middleware/auth-middleware');
 
 router.route('/:id/create').post(authMiddleware, petController.createPet);
 router.route('/:id/petProfile/get').get(authMiddleware, petController.getPet);
+router.route('/update').put(authMiddleware, petController.updatePet);
 module.exports = router;

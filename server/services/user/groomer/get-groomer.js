@@ -2,19 +2,26 @@ const { Groomer, User } = require('../../../models');
 const { ValidationError } = require('../../../errors');
 
 module.exports = async (user) => {
-  if(!user) {
+  if (!user) {
     throw new ValidationError('User not authenticated', 401);
   }
   const groomers = await Groomer.findAll({
-    attributes: ['id', 'specialization', 'experienceYears', 'rating', 'status', 'userId'],
+    attributes: [
+      'id',
+      'specialization',
+      'experienceYears',
+      'rating',
+      'status',
+      'userId',
+      'createdAt',
+    ],
     include: [
       {
-        model:User,
+        model: User,
         as: 'users',
-        attributes: ['id', 'name', 'email'],
-     },
-    ],       
-    
+        attributes: ['id', 'name', 'email', 'phone'],
+      },
+    ],
   });
 
   if (!groomers || groomers.length === 0) {

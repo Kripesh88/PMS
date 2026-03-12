@@ -1,7 +1,6 @@
 const { User, Breed, sequelize } = require('../../../models');
 const bcrypt = require('bcryptjs');
 const createPet = require('../../../services/user/pet/create-pet');
-const role = require('../../../models/role');
 
 module.exports = async ({ name, email, password, phone, breedId, age }) => {
   const transaction = await sequelize.transaction();
