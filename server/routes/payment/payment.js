@@ -5,7 +5,7 @@ const authMiddleware = require('../../middleware/auth-middleware');
 
 // Notification routes
 
-router.route('/khalti/initiate').post(authMiddleware, paymentController.initiatePayment);
+router.route('/khalti/:appointmentId/initiate').post(authMiddleware, paymentController.initiatePayment);
 router.route('/khalti/verify').get(paymentController.verifyPayment);
 
 module.exports = router;

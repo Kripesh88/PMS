@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      orderId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       serviceType: {
         type: DataTypes.ENUM('vet', 'grooming'),
         allowNull: false,
@@ -78,6 +82,18 @@ module.exports = (sequelize, DataTypes) => {
       time: {
         type: DataTypes.TIME,
         allowNull: false,
+      },
+      paymentMethod: {
+        type: DataTypes.ENUM('khalti', 'cash'),
+        allowNull: true,
+      },
+      paymentStatus: {
+        type: DataTypes.ENUM('pending', 'completed', 'failed'),
+        allowNull: true,
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
     },
     {
