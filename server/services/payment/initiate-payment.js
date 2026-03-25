@@ -1,8 +1,8 @@
 const axios = require('axios');
-const { Order } = require('../../models');
+const { Appointment, Order } = require('../../models');
 const { ValidationError } = require('../../errors');
 
-module.exports = async ({ user, amount }) => {
+module.exports = async ({ appointmentId, user, method, amount }) => {
   if (!user) {
     throw new ValidationError('User not found', 404);
   }
@@ -11,10 +11,47 @@ module.exports = async ({ user, amount }) => {
     throw new ValidationError('Invalid amount', 400);
   }
 
-  // Create order in paisa
+  const appointment = await Appointment.findByPk(appointmentId);
+
+  if (!appointment) {
+    throw new ValidationError('Appointment not found', 404);
+  }
+
+  if (appointment.userId !== user.id) {
+    throw new ValidationError('Unauthorized', 403);
+  }
+
+  if (appointment.status !== 'confirmed') {
+    throw new ValidationError('Appointment must be confirmed first', 400);
+  }
+
+  if (appointment.paymentStatus === 'paid') {
+    throw new ValidationError('Already paid', 400);
+  }
+
+  if (!['cash', 'khalti'].includes(method)) {
+    throw new ValidationError('Invalid payment method', 400);
+  }
+
+  // Save method
+  appointment.paymentMethod = method;
+
+  // CASH FLOW
+  if (method === 'cash') {
+    appointment.paymentStatus = 'pending';
+    await appointment.save();
+
+    return {
+      message: 'Cash payment selected',
+      appointmentId: appointment.id,
+    };
+  }
+
+  //  KHALTI FLOW
   const order = await Order.create({
     userId: user.id,
-    amount: amount * 100,
+    appointmentId: appointment.id,
+    amount: amount * 100, // in paisa
   });
 
   const response = await axios.post(
@@ -38,8 +75,12 @@ module.exports = async ({ user, amount }) => {
   order.status = 'initiated';
   await order.save();
 
+  appointment.orderId = order.id;
+  await appointment.save();
+
   return {
     orderId: order.id,
     payment_url: response.data.payment_url,
+    pidx: response.data.pidx,
   };
 };

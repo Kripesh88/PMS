@@ -9,9 +9,10 @@ module.exports = async ({ user }) => {
   const groomer = await Groomer.findOne({
     where: { userId: user.id },
   });
+  
 
   if (!groomer) {
-    throw new ValidationError('Vet profile not found', 404);
+    throw new ValidationError('Groomer profile not found', 404);
   }
 
   const appointments = await Appointment.findAll({

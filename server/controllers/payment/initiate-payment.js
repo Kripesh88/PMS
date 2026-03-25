@@ -6,6 +6,8 @@ module.exports = async (req, res, next) => {
     const result = await initiateKhaltiService({
       user: req.user,
       amount: req.body.amount,
+      appointmentId: req.params.appointmentId,
+      method:req.body.method,
     });
 
     res.status(http.status.OK).json({

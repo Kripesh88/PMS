@@ -13,7 +13,7 @@ module.exports = async ({ user }) => {
   if (!vet) {
     throw new ValidationError('Vet profile not found', 404);
   }
-
+  
   const appointments = await Appointment.findAll({
     where: {
       vetId: vet.id,
