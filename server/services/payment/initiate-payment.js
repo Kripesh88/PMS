@@ -58,6 +58,7 @@ module.exports = async ({ appointmentId, user, method, amount }) => {
     `${process.env.KHALTI_BASE_URL}/epayment/initiate/`,
     {
       return_url: process.env.KHALTI_RETURN_URL,
+      // return_url: `${process.env.KHALTI_WEBSITE_URL}/dashboard/my-appointments`,
       website_url: process.env.KHALTI_WEBSITE_URL,
       amount: order.amount,
       purchase_order_id: order.id,

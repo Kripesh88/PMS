@@ -37,6 +37,7 @@ app.use('/admin', require('./routes/vet'));
 app.use('/Admin', require('./routes/admin'));
 app.use('/info', require('./routes/notification'));
 app.use('/api', require('./routes/payment'));
+app.use('/v1/api', require('./routes/chatbot'));
 
 app.use((req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
