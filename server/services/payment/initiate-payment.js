@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { Appointment, Order } = require('../../models');
 const { ValidationError } = require('../../errors');
+const createNotification = require('../notification/create-notification');
 
 module.exports = async ({ appointmentId, user, method, amount }) => {
   if (!user) {
@@ -33,32 +34,49 @@ module.exports = async ({ appointmentId, user, method, amount }) => {
     throw new ValidationError('Invalid payment method', 400);
   }
 
-  // Save method
+  // Save payment method
   appointment.paymentMethod = method;
 
-  // CASH FLOW
-  if (method === 'cash') {
-    appointment.paymentStatus = 'pending';
-    await appointment.save();
-
-    return {
-      message: 'Cash payment selected',
-      appointmentId: appointment.id,
-    };
-  }
-
-  //  KHALTI FLOW
+  //  Create order FIRST (used in both cash & khalti)
   const order = await Order.create({
     userId: user.id,
     appointmentId: appointment.id,
     amount: amount * 100, // in paisa
+    status: method === 'cash' ? 'completed' : 'pending',
   });
+
+  //Cash Payment
+  if (method === 'cash') {
+    appointment.paymentStatus = 'completed';
+    appointment.status = 'completed';
+    appointment.orderId = order.id;
+
+    await appointment.save();
+
+    // ensure order status
+    order.status = 'completed';
+    await order.save();
+
+    await createNotification({
+      senderId: user.id,
+      receiverId: appointment.userId,
+      appointmentId: appointment.id,
+      orderId: order.id,
+      title: 'Payment Completed',
+      message: 'Your cash payment has been completed successfully',
+    });
+
+    return {
+      message: 'Cash payment completed successfully',
+      appointmentId: appointment.id,
+      orderId: order.id,
+    };
+  }
 
   const response = await axios.post(
     `${process.env.KHALTI_BASE_URL}/epayment/initiate/`,
     {
       return_url: process.env.KHALTI_RETURN_URL,
-      // return_url: `${process.env.KHALTI_WEBSITE_URL}/dashboard/my-appointments`,
       website_url: process.env.KHALTI_WEBSITE_URL,
       amount: order.amount,
       purchase_order_id: order.id,
@@ -78,6 +96,15 @@ module.exports = async ({ appointmentId, user, method, amount }) => {
 
   appointment.orderId = order.id;
   await appointment.save();
+
+  await createNotification({
+    senderId: user.id,
+    receiverId: appointment.userId,
+    appointmentId: appointment.id,
+    orderId: order.id,
+    title: 'Payment Initiated',
+    message: `Your payment is now ${order.status}`,
+  });
 
   return {
     orderId: order.id,
